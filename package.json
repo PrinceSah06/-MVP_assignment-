@@ -4,6 +4,8 @@
   "type": "module",
    "scripts": {
     "dev": "bun run src/index.ts",
+    "dev:api": "bun run src/index.ts",
+    "dev:ui": "python -m http.server 3001 --directory frontend",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate"
   },

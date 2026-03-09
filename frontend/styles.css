@@ -1,0 +1,269 @@
+:root {
+  --bg: #f4efe6;
+  --panel: #fff9f0;
+  --ink: #1c1b1a;
+  --muted: #68645f;
+  --line: #d9d0c3;
+  --accent: #00695c;
+  --accent-strong: #004e45;
+  --warn: #9c2f2f;
+  --shadow: 0 12px 30px rgba(28, 27, 26, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--ink);
+  background: radial-gradient(circle at 10% 20%, #efe4d2 0%, #f4efe6 40%, #efe7db 100%);
+  min-height: 100vh;
+}
+
+.background-shape {
+  position: fixed;
+  z-index: -1;
+  border-radius: 999px;
+  opacity: 0.5;
+  filter: blur(2px);
+}
+
+.shape-a {
+  width: 320px;
+  height: 320px;
+  background: #c8e6c9;
+  top: -100px;
+  right: -80px;
+}
+
+.shape-b {
+  width: 240px;
+  height: 240px;
+  background: #ffe0b2;
+  bottom: -80px;
+  left: -60px;
+}
+
+.container {
+  width: min(1100px, 92vw);
+  margin: 2rem auto 3rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.hero {
+  background: linear-gradient(135deg, #0f3d39, #226b63);
+  color: #f6f4ef;
+  border-radius: 18px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.eyebrow {
+  margin: 0 0 0.4rem;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.88;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+}
+
+.subtitle {
+  margin: 0.6rem 0 0;
+  color: #e7efe9;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 1rem;
+  box-shadow: var(--shadow);
+  animation: rise 360ms ease;
+}
+
+.panel h2 {
+  margin-top: 0;
+  margin-bottom: 0.8rem;
+  font-size: 1.05rem;
+}
+
+.guide-panel {
+  border-color: #9fc6c0;
+  background: linear-gradient(120deg, #fff9f0, #effaf7);
+}
+
+.steps {
+  margin: 0.4rem 0 0.2rem;
+  padding-left: 1.3rem;
+  display: grid;
+  gap: 0.42rem;
+  font-size: 0.94rem;
+}
+
+.steps code {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.86em;
+  background: #f3ece2;
+  border: 1px solid #e0d4c4;
+  border-radius: 6px;
+  padding: 0.05rem 0.32rem;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.form-grid {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.hint {
+  margin: 0;
+  padding: 0.5rem 0.65rem;
+  border-radius: 8px;
+  font-size: 0.86rem;
+  border: 1px solid #d8d0c2;
+  background: #faf4e9;
+  color: #514a43;
+}
+
+.hint.bad {
+  border-color: #e4a5a5;
+  background: #fff1f1;
+  color: #7e2f2f;
+}
+
+.hint.good {
+  border-color: #9ec6ba;
+  background: #eef8f5;
+  color: #1f5c53;
+}
+
+label {
+  display: grid;
+  gap: 0.3rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+input,
+select,
+button {
+  font: inherit;
+}
+
+input,
+select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.52rem 0.62rem;
+  background: #fffcf8;
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid #83bcb5;
+  border-color: #83bcb5;
+}
+
+button {
+  border: 0;
+  border-radius: 8px;
+  padding: 0.58rem 0.78rem;
+  cursor: pointer;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  transition: transform 120ms ease, background-color 120ms ease;
+}
+
+button:hover {
+  background: var(--accent-strong);
+  transform: translateY(-1px);
+}
+
+.cards {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+
+.card {
+  border: 1px solid var(--line);
+  background: #fffdf8;
+  border-radius: 10px;
+  padding: 0.75rem;
+}
+
+.card .label {
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin: 0;
+}
+
+.card .value {
+  margin: 0.2rem 0 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.log {
+  margin: 0.4rem 0 0;
+  border-radius: 10px;
+  border: 1px solid #e1d6c8;
+  background: #171614;
+  color: #e9f0ec;
+  min-height: 180px;
+  max-height: 360px;
+  overflow: auto;
+  padding: 0.8rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.82rem;
+  line-height: 1.42;
+}
+
+.log.error {
+  border-color: #f0c3c3;
+  color: #ffd0d0;
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 720px) {
+  .container {
+    width: min(1100px, 95vw);
+    margin-top: 1rem;
+  }
+
+  .hero {
+    padding: 1.2rem;
+  }
+}
