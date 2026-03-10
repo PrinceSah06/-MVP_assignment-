@@ -98,25 +98,56 @@ function normalizeStatusRows(raw) {
   return [];
 }
 
+function readCount(value) {
+  if (value == null) return 0;
+  const parsed = Number(value);
+  return Number.isNaN(parsed) ? 0 : parsed;
+}
+
+function countFromRow(row) {
+  if (!row || typeof row !== "object") return 0;
+  return readCount(row.count ?? row["count(*)"] ?? row["COUNT(*)"]);
+}
+
 function renderDashboard(stats) {
   const statusRows = normalizeStatusRows(stats.leadsByStatus);
-  const statusText =
+  const totalLeads = readCount(stats.totalLeads);
+  const visitsScheduled = readCount(stats.visitsScheduled);
+  const bookedFromApi = readCount(stats.bookings);
+  const bookedFromStatus = countFromRow(
+    statusRows.find((row) => String(row.status || "").toUpperCase() === "BOOKED")
+  );
+  const bookings = bookedFromApi || bookedFromStatus;
+  const bookingRate = totalLeads > 0 ? `${Math.round((bookings / totalLeads) * 100)}%` : "0%";
+
+  const statusMarkup =
     statusRows.length > 0
-      ? statusRows.map((row) => `${row.status}: ${row.count ?? row["count(*)"] ?? "-"}`).join(" | ")
-      : "No grouped status data";
+      ? statusRows
+          .map((row) => {
+            const status = row.status || "UNKNOWN";
+            const count = countFromRow(row);
+            return `<li class="status-item"><span>${status}</span><strong>${count}</strong></li>`;
+          })
+          .join("")
+      : '<li class="status-empty">No grouped status data</li>';
 
   dashboardCards.innerHTML = `
     <div class="card">
       <p class="label">Total Leads</p>
-      <p class="value">${stats.totalLeads ?? 0}</p>
+      <p class="value">${totalLeads}</p>
     </div>
     <div class="card">
       <p class="label">Visits Scheduled</p>
-      <p class="value">${stats.visitsScheduled ?? 0}</p>
+      <p class="value">${visitsScheduled}</p>
     </div>
     <div class="card">
+      <p class="label">Bookings</p>
+      <p class="value">${bookings}</p>
+      <p class="subvalue">${bookingRate} conversion</p>
+    </div>
+    <div class="card status-card">
       <p class="label">Leads By Status</p>
-      <p class="value" style="font-size:1rem">${statusText}</p>
+      <ul class="status-list">${statusMarkup}</ul>
     </div>
   `;
 }

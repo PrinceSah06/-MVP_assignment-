@@ -20,9 +20,18 @@ export async function getDashboardStats() {
     `
   );
 
+  const bookings = await db.execute(
+    sql`
+      SELECT COUNT(*) 
+      FROM leads
+      WHERE status = 'BOOKED'
+    `
+  );
+
   return {
     totalLeads: totalLeads[0]?.count,
     visitsScheduled: visitsScheduled[0]?.count,
-    leadsByStatus
+    leadsByStatus,
+    bookings: bookings[0]?.count
   };
 }

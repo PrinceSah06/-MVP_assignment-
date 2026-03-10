@@ -225,6 +225,50 @@ button:hover {
   font-weight: 700;
 }
 
+.card .subvalue {
+  margin: 0.3rem 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.status-card {
+  grid-column: span 2;
+}
+
+.status-list {
+  margin: 0.45rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.42rem;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  background: #f8f2e8;
+  border: 1px solid #e8dccb;
+  border-radius: 8px;
+  padding: 0.38rem 0.5rem;
+  font-size: 0.86rem;
+}
+
+.status-item strong {
+  min-width: 28px;
+  text-align: center;
+  background: #fff8ee;
+  border: 1px solid #e0d2bd;
+  border-radius: 999px;
+  padding: 0.05rem 0.35rem;
+}
+
+.status-empty {
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
 .log {
   margin: 0.4rem 0 0;
   border-radius: 10px;
@@ -265,5 +309,9 @@ button:hover {
 
   .hero {
     padding: 1.2rem;
+  }
+
+  .status-card {
+    grid-column: span 1;
   }
 }
