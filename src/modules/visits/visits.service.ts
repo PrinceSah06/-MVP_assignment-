@@ -1,5 +1,6 @@
 import { db } from "../../config/db";
-import { visits } from "../../db/schema";
+import { visits, leads } from "../../db/schema";
+import { eq } from "drizzle-orm";
 
 export async function scheduleVisit(data: {
   leadId: number;
@@ -14,6 +15,12 @@ export async function scheduleVisit(data: {
     visitDate: data.visitDate,
     visitTime: data.visitTime,
   }).returning();
+
+  // update lead pipeline stage
+  await db
+    .update(leads)
+    .set({ status: "Visit Scheduled" })
+    .where(eq(leads.id, data.leadId));
 
   return result[0];
 }

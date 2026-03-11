@@ -1,11 +1,15 @@
 import { pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
 
+import { uuid  } from "drizzle-orm/pg-core";
+
 export const agents = pgTable("agents", {
   id: serial("id").primaryKey(),
 
   name: text("name").notNull(),
 
   email: text("email").notNull().unique(),
+
+  role: text("role").default("agent"), // admin | agent
 
   createdAt: timestamp("created_at").defaultNow(),
 });
@@ -44,4 +48,28 @@ export const visits = pgTable("visits", {
   outcome: text("outcome"),
 
   createdAt: timestamp("created_at").defaultNow(),
+});
+
+
+export const activities = pgTable("activities", {
+  id: serial("id").primaryKey(),
+
+  action: text("action").notNull(),
+
+  leadId: integer("lead_id"),
+
+  createdAt: timestamp("created_at").defaultNow()
+});
+
+
+export const conversations = pgTable("conversations", {
+  id: uuid("id").primaryKey().defaultRandom(),
+
+  leadId: uuid("lead_id").notNull(),
+
+  sender: text("sender").notNull(),
+
+  message: text("message").notNull(),
+
+  createdAt: timestamp("created_at").defaultNow()
 });

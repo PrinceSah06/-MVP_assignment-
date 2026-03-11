@@ -4,34 +4,38 @@ import { sql } from "drizzle-orm";
 
 export async function getDashboardStats() {
 
-  const totalLeads = await db.select({
+  // total leads
+  const totalLeadsResult = await db.select({
     count: sql<number>`count(*)`
   }).from(leads);
 
-  const visitsScheduled = await db.select({
+  // total visits scheduled
+  const visitsScheduledResult = await db.select({
     count: sql<number>`count(*)`
   }).from(visits);
 
-  const leadsByStatus = await db.execute(
+  // leads grouped by status
+  const leadsByStatusResult = await db.execute(
     sql`
-      SELECT status, COUNT(*) 
+      SELECT status, COUNT(*) as count
       FROM leads
       GROUP BY status
     `
   );
 
-  const bookings = await db.execute(
+  // bookings
+  const bookingsResult = await db.execute(
     sql`
-      SELECT COUNT(*) 
+      SELECT COUNT(*) as count
       FROM leads
-      WHERE status = 'BOOKED'
+      WHERE status = 'Booked'
     `
   );
 
   return {
-    totalLeads: totalLeads[0]?.count,
-    visitsScheduled: visitsScheduled[0]?.count,
-    leadsByStatus,
-    bookings: bookings[0]?.count
+    totalLeads: Number(totalLeadsResult[0]?.count || 0),
+    visitsScheduled: Number(visitsScheduledResult[0]?.count || 0),
+    leadsByStatus: leadsByStatusResult.rows,
+    bookings: Number(bookingsResult.rows[0]?.count || 0)
   };
 }
